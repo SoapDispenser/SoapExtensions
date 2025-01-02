@@ -11,7 +11,7 @@ public abstract record Error(string Message);
 /// </summary>
 /// <typeparam name="T">The type of the result value.</typeparam>
 /// <typeparam name="TE">The type of the error, derived from <see cref="Error"/>.</typeparam>
-public readonly record struct Result<T, TE>(T? Value, Error? Error) where TE : Error
+public readonly record struct Result<T, TE>(T? Value, TE? Error) where TE : Error
 {
     /// <summary>
     /// Gets a value indicating whether the operation was successful.
@@ -33,7 +33,7 @@ public readonly record struct Result<T, TE>(T? Value, Error? Error) where TE : E
     /// </summary>
     /// <param name="standardError">The error to convert.</param>
     /// <returns>A failed result containing the error.</returns>
-    public static implicit operator Result<T, TE>(Error standardError)
+    public static implicit operator Result<T, TE>(TE standardError)
     {
         return new Result<T, TE>(default, standardError);
     }
